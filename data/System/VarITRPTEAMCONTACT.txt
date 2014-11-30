@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="ProjectContributor" date="1417310157" format="1.1" version="1"}%
+%META:TOPICPARENT{name="ItrpPlugin"}%
+#VarEXAMPLETAG
+---+++ ITRPTEAMCONTACT -- get contact person of a team
+   * The =%<nop>ITRPTEAMCONTACT{}%= variable is handled by the ItrpPlugin
+   * Syntax: =%<nop>EXAMPLETAG{}%=
+   * Parameter =group="..."= - name of the group
+   * Example: =%<nop>ITRPTEAMCONTACT{group="support"}%=
+

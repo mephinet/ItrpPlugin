@@ -1,0 +1,6 @@
+!noci
+data/System/ItrpPlugin.txt 0644 Documentation page
+data/System/VarITRPTEAMCONTACT.txt 0644 Tag documentation
+data/Sandbox/PluginTestItrpPlugin.txt 0644 Examples
+lib/Foswiki/Plugins/ItrpPlugin.pm 0444 Perl module
+lib/Foswiki/Plugins/ItrpPlugin/Config.spec 0444 Configuration
