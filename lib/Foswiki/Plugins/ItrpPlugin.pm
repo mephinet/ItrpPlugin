@@ -164,7 +164,7 @@ sub initPlugin {
     # Register the _EXAMPLETAG function to handle %EXAMPLETAG{...}%
     # This will be called whenever %EXAMPLETAG% or %EXAMPLETAG{...}% is
     # seen in the topic text.
-    Foswiki::Func::registerTagHandler( 'ITRPTEAMCONTACT', \&_ITRPTEAMCONTACT );
+    Foswiki::Func::registerTagHandler( 'ITRPTEAMCOORDINATOR', \&_ITRPTEAMCOORDINATOR );
 
     # Allow a sub to be called from the REST interface
     # using the provided alias.  This example enables strong
@@ -172,11 +172,11 @@ sub initPlugin {
     # as of Foswiki 1.1.2
 
     Foswiki::Func::registerRESTHandler(
-        'teamContact', \&rest_team_contact,
+        'teamCoordinator', \&rest_team_coordinator,
         authenticate => 1,  # Set to 0 if handler should be useable by WikiGuest
         validate     => 1,  # Set to 0 to disable StrikeOne CSRF protection
         http_allow => 'POST', # Set to 'GET,POST' to allow use HTTP GET and POST
-        description => 'Get Team\'s contact person'
+        description => 'Get team\'s coordinator'
     );
 
     # Plugin correctly initialized
@@ -185,7 +185,7 @@ sub initPlugin {
 
 # The function used to handle the %EXAMPLETAG{...}% macro
 # You would have one of these for each macro you want to process.
-sub _ITRPTEAMCONTACT {
+sub _ITRPTEAMCOORDINATOR {
     my ( $session, $params, $topic, $web, $topicObject ) = @_;
 
     # $session  - a reference to the Foswiki session object
@@ -205,7 +205,26 @@ sub _ITRPTEAMCONTACT {
     # For example, %EXAMPLETAG{'hamburger' sideorder="onions"}%
     # $params->{_DEFAULT} will be 'hamburger'
     # $params->{sideorder} will be 'onions'
-    return "<span>(querying ITRP server...)</span>";
+
+    #eval {require 'JSON'} or return "<font color=\"red\">ItrpPlugin: Can't load required modules ($@)</font>";
+
+    my $team_id = $params->{team} or return "<font color=\"red\">parameter team missing</font>";
+    my $server = 'apa.itrp.at';
+    my $token = 'xxx';
+
+    my $url = URI->new('https://' . $server . '/v1/teams/' . $team_id . '?api_token=' . $token);
+
+    my $resource = Foswiki::Func::getExternalResource($url);
+
+    if ( !$resource->is_error() && $resource->isa('HTTP::Response') ) {
+        my $content = $resource->decoded_content();
+        #my $res = JSON::from_json($content);
+        #return $res->{coordinator}->{name} || '-';
+        return "Mario";
+    } else {
+        my $error = $resource->message() || 'unknown error';
+        return "<font color=\"red\">ItrpPlugin: Failed to get team coordinator from Itrp: $error</font>";
+    }
 }
 
 =begin TML

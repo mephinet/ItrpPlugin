@@ -1,0 +1,9 @@
+%META:TOPICINFO{author="ProjectContributor" date="1417310157" format="1.1" version="1"}%
+%META:TOPICPARENT{name="ItrpPlugin"}%
+#VarEXAMPLETAG
+---+++ ITRPTEAMCOORDINATOR -- get coordinator person of a team
+   * The =%<nop>ITRPTEAMCOORDINATOR{}%= variable is handled by the ItrpPlugin
+   * Syntax: =%<nop>EXAMPLETAG{}%=
+   * Parameter =team="..."= - numeric ID of the team
+   * Example: =%<nop>ITRPTEAMCOORDINATOR{team="support"}%=
+

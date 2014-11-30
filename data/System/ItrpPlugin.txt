@@ -13,7 +13,7 @@ Integrate ITRP into Foswiki.
 
 ---++ Macros
 
-   * %<nop>ITRPTEAMCONTACT% -- get contact person of a team
+   * %<nop>ITRPTEAMCOORDINATOR% -- get coordinator person of a team
 
 
 ---++ Installation
