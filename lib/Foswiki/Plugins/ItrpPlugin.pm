@@ -68,6 +68,7 @@ use warnings;
 
 use Foswiki::Func    ();    # The plugins API
 use Foswiki::Plugins ();    # For the API version
+use JSON             ();
 
 # $VERSION is referred to by Foswiki, and is the only global variable that
 # *must* exist in this package.  Use "v1.2.3" format for releases,  and
@@ -206,8 +207,6 @@ sub _ITRPTEAMCOORDINATOR {
     # $params->{_DEFAULT} will be 'hamburger'
     # $params->{sideorder} will be 'onions'
 
-    #eval {require 'JSON'} or return "<font color=\"red\">ItrpPlugin: Can't load required modules ($@)</font>";
-
     my $team_id = $params->{team} or return "<font color=\"red\">parameter team missing</font>";
     my $server = 'apa.itrp.at';
     my $token = 'xxx';
@@ -218,9 +217,8 @@ sub _ITRPTEAMCOORDINATOR {
 
     if ( !$resource->is_error() && $resource->isa('HTTP::Response') ) {
         my $content = $resource->decoded_content();
-        #my $res = JSON::from_json($content);
-        #return $res->{coordinator}->{name} || '-';
-        return "Mario";
+        my $res = JSON::from_json($content);
+        return $res->{coordinator}->{name} || '-';
     } else {
         my $error = $resource->message() || 'unknown error';
         return "<font color=\"red\">ItrpPlugin: Failed to get team coordinator from Itrp: $error</font>";
