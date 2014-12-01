@@ -32,11 +32,9 @@ sub initPlugin {
 
     Foswiki::Func::registerRESTHandler(
         'teamCoordinator', \&rest_team_coordinator,
-        authenticate =>
-            1,    # Set to 0 if handler should be useable by WikiGuest
-        validate => 1,    # Set to 0 to disable StrikeOne CSRF protection
-        http_allow =>
-            'POST',       # Set to 'GET,POST' to allow use HTTP GET and POST
+        authenticate => 1,  # Set to 0 if handler should be useable by WikiGuest
+        validate     => 1,  # Set to 0 to disable StrikeOne CSRF protection
+        http_allow => 'POST', # Set to 'GET,POST' to allow use HTTP GET and POST
         description => 'Get team\'s coordinator'
     );
 
@@ -53,17 +51,16 @@ sub _ITRPTEAMCOORDINATOR {
     my ( $session, $params, $topic, $web, $topicObject ) = @_;
 
     my $team_id = $params->{team}
-        or return _format_error_msg('parameter team missing');
+      or return _format_error_msg('parameter team missing');
     $team_id =~ /^[0-9]+$/
-        or return _format_error_msg('parameter team invalid');
+      or return _format_error_msg('parameter team invalid');
     my $server = $Foswiki::cfg{Plugins}{ItrpPlugin}{URL}
-        or return _format_error_msg('Plugin parameter URL not configured');
+      or return _format_error_msg('Plugin parameter URL not configured');
     my $token = $Foswiki::cfg{Plugins}{ItrpPlugin}{API_Token}
-        or
-        return _format_error_msg('Plugin parameter API_Token not configured');
+      or return _format_error_msg('Plugin parameter API_Token not configured');
 
     my $url =
-        URI->new( $server . '/v1/teams/' . $team_id . '?api_token=' . $token,
+      URI->new( $server . '/v1/teams/' . $team_id . '?api_token=' . $token,
         'http' );
 
     my $resource = Foswiki::Func::getExternalResource($url);
