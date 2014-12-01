@@ -5,4 +5,3 @@ lib/Foswiki/Plugins/ItrpPlugin.pm 0444 Perl module
 lib/Foswiki/Plugins/ItrpPlugin/Config.spec 0444 Configuration
 test/unit/ItrpPlugin/ItrpPluginSuite.pm 0644
 test/unit/ItrpPlugin/ItrpPluginTests.pm 0644
-TIDY 0644
