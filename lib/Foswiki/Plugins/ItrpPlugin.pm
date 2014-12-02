@@ -6,6 +6,8 @@ use warnings;
 use Foswiki::Func    ();    # The plugins API
 use Foswiki::Plugins ();    # For the API version
 use JSON             ();
+use URI;
+use URI::QueryParam;
 
 # Note:  Alpha versions compare as numerically lower than the non-alpha version
 # so the versions in ascending order are:
@@ -21,7 +23,7 @@ sub initPlugin {
     my ( $topic, $web, $user, $installWeb ) = @_;
 
     # check for Plugins.pm versions
-    if ( $Foswiki::Plugins::VERSION < 2.3 ) {
+    if ( $Foswiki::Plugins::VERSION < 2.2 ) {
         Foswiki::Func::writeWarning( 'Version mismatch between ',
             __PACKAGE__, ' and Plugins.pm' );
         return 0;
@@ -59,9 +61,8 @@ sub _ITRPTEAMCOORDINATOR {
     my $token = $Foswiki::cfg{Plugins}{ItrpPlugin}{API_Token}
       or return _format_error_msg('Plugin parameter API_Token not configured');
 
-    my $url =
-      URI->new( $server . '/v1/teams/' . $team_id . '?api_token=' . $token,
-        'http' );
+    my $url = URI->new( $server . '/v1/teams/' . $team_id, 'http' );
+    $url->query_param( api_token => $token );
 
     my $resource = Foswiki::Func::getExternalResource($url);
 

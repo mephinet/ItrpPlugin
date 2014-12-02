@@ -1,1 +1,2 @@
 JSON,>=0,cpan,Required, for parsing the ITRP server's response
+URI,>=1.22,cpan,Required, for accessing the ITRP server
